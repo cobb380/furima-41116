@@ -25,9 +25,12 @@
 | Column       | Type       | Options                        |
 |--------------|------------|--------------------------------|
 | name         | string     | null: false                    |
-| description  | text       | null: false                    |
+| explanation  | text       | null: false                    |
 | category     | string     | null: false                    |
 | condition    | string     | null: false                    |
+| postage      | integer     | null: false                    |
+| shipping_area| integer     | null: false                    |
+| until_shipping | integer     | null: false                    |
 | price        | integer    | null: false                    |
 | user         | references | null: false, foreign_key: true |
 
