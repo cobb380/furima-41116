@@ -29,7 +29,7 @@
 | category_id       | integer    | null: false                    |
 | condition_id      | integer    | null: false                    |
 | postage_id        | integer    | null: false                    |
-| shipping_area_id  | integer    | null: false                    |
+| prefecture_id     | integer    | null: false                    |
 | until_shipping_id | integer    | null: false                    |
 | price             | integer    | null: false                    |
 | user              | references | null: false, foreign_key: true |
@@ -39,7 +39,7 @@
 - belongs_to :user
 - has_one :buy
 
-### buys テーブル
+### buy テーブル
 
 | Column       | Type       | Options                        |
 |--------------|------------|--------------------------------|
@@ -62,8 +62,7 @@
 | house_number    | string     | null: false                    |
 | building_name   | string     |                                |
 | phone_number    | string     | null: false                    |
-| user            | references | null: false, foreign_key: true |
-| item            | references | null: false, foreign_key: true |
+| buy             | references | null: false, foreign_key: true |
 
 #### アソシエーション
 
