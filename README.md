@@ -4,16 +4,16 @@
 
 ### users テーブル
 
-| Column           | Type   | Options                   |
-|------------------|--------|---------------------------|
-| nickname         | string | null: false               |
-| email            | string | null: false, unique: true |
+| Column             | Type   | Options                   |
+|--------------------|--------|---------------------------|
+| nickname           | string | null: false               |
+| email              | string | null: false, unique: true |
 | encrypted_password | string | null: false               |
-| first_name       | string | null: false               |
-| last_name        | string | null: false               |
-| first_name_kana  | string | null: false               |
-| last_name_kana   | string | null: false               |
-| birthday         | date   | null: false               |
+| first_name         | string | null: false               |
+| last_name          | string | null: false               |
+| first_name_kana    | string | null: false               |
+| last_name_kana     | string | null: false               |
+| birthday           | date   | null: false               |
 
 #### アソシエーション
 
@@ -22,17 +22,17 @@
 
 ### items テーブル
 
-| Column       | Type       | Options                        |
-|--------------|------------|--------------------------------|
-| name         | string     | null: false                    |
-| explanation  | text       | null: false                    |
-| category     | string     | null: false                    |
-| condition    | string     | null: false                    |
-| postage      | integer     | null: false                    |
-| shipping_area| integer     | null: false                    |
-| until_shipping | integer     | null: false                    |
-| price        | integer    | null: false                    |
-| user         | references | null: false, foreign_key: true |
+| Column            | Type       | Options                        |
+|-------------------|------------|--------------------------------|
+| name              | string     | null: false                    |
+| explanation       | text       | null: false                    |
+| category_id       | integer    | null: false                    |
+| condition_id      | integer    | null: false                    |
+| postage_id        | integer    | null: false                    |
+| shipping_area_id  | integer    | null: false                    |
+| until_shipping_id | integer    | null: false                    |
+| price             | integer    | null: false                    |
+| user              | references | null: false, foreign_key: true |
 
 #### アソシエーション
 
@@ -62,7 +62,8 @@
 | house_number    | string     | null: false                    |
 | building_name   | string     |                                |
 | phone_number    | string     | null: false                    |
-| buy             | references | null: false, foreign_key: true |
+| user            | references | null: false, foreign_key: true |
+| item            | references | null: false, foreign_key: true |
 
 #### アソシエーション
 
