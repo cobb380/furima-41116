@@ -51,38 +51,70 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages).to include("Password is invalid. Input must contain both letters and numbers.")
     end
 
+    it 'パスワードが数字のみでは登録できないこと' do
+      @user.password = '123456'
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Password is invalid. Input must contain both letters and numbers."
+    end
+
+    it 'パスワードが全角だと登録できないこと' do
+      @user.password = 'ｐａｓｓｗｏｒｄ１'
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Password is invalid. Input must contain both letters and numbers."
+    end
+
     it 'パスワードとパスワード（確認）は、値の一致が必須であること' do
       @user.password_confirmation = 'mismatch'
       @user.valid?
       expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
     end
 
-    it 'お名前(全角)は、名字と名前がそれぞれ必須であること' do
-      @user.first_name = ''
+    it 'お名前(全角)は、名字が必須であること' do
       @user.last_name = ''
       @user.valid?
-      expect(@user.errors.full_messages).to include("Last name can't be blank", "First name can't be blank")
+      expect(@user.errors.full_messages).to include("Last name can't be blank")
     end
 
-    it 'お名前(全角)は、全角（漢字・ひらがな・カタカナ）での入力が必須であること' do
-      @user.first_name = 'Smith'
-      @user.last_name = 'John'
+    it 'お名前(全角)は、名前が必須であること' do
+      @user.first_name = ''
       @user.valid?
-      expect(@user.errors.full_messages).to include("Last name is invalid. Input full-width characters.", "First name is invalid. Input full-width characters.")
+      expect(@user.errors.full_messages).to include("First name can't be blank")
     end
 
-    it 'お名前カナ(全角)は、名字と名前がそれぞれ必須であること' do
-      @user.first_name_kana = ''
+    it '名字が全角（漢字・ひらがな・カタカナ）での入力が必須であること' do
+      @user.last_name = 'Smith'
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Last name is invalid. Input full-width characters."
+    end
+
+    it '名前が全角（漢字・ひらがな・カタカナ）での入力が必須であること' do
+      @user.first_name = 'John'
+      @user.valid?
+      expect(@user.errors.full_messages).to include "First name is invalid. Input full-width characters."
+    end
+
+    it 'お名前カナ(全角)は名字が必須であること' do
       @user.last_name_kana = ''
       @user.valid?
-      expect(@user.errors.full_messages).to include("Last name kana can't be blank", "First name kana can't be blank")
+      expect(@user.errors.full_messages).to include "Last name kana can't be blank"
     end
 
-    it 'お名前カナ(全角)は、全角（カタカナ）での入力が必須であること' do
-      @user.first_name_kana = 'すみす'
-      @user.last_name_kana = 'じょん'
+    it 'お名前カナ(全角)は名前が必須であること' do
+      @user.first_name_kana = ''
       @user.valid?
-      expect(@user.errors.full_messages).to include("Last name kana is invalid. Input full-width katakana characters.", "First name kana is invalid. Input full-width katakana characters.")
+      expect(@user.errors.full_messages).to include "First name kana can't be blank"
+    end
+
+    it 'お名前カナ(全角)は名字が全角カタカナでの入力が必須であること' do
+      @user.last_name_kana = 'すみす'
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Last name kana is invalid. Input full-width katakana characters."
+    end
+
+    it 'お名前カナ(全角)は名前が全角カタカナでの入力が必須であること' do
+      @user.first_name_kana = 'じょん'
+      @user.valid?
+      expect(@user.errors.full_messages).to include "First name kana is invalid. Input full-width katakana characters."
     end
 
     it '生年月日が必須であること' do
