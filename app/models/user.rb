@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :buys
 
   with_options presence: true do
+    validates :nickname
+    validates :birthday
     # 半角英数字混合のみ許可する
     validates :password, format: {with: /\A(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+\z/, message: "is invalid. Input must contain both letters and numbers."}
     # ひらがな、カタカナ、漢字のみ許可する
