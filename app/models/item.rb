@@ -16,8 +16,7 @@ class Item < ApplicationRecord
   validates :postage_id, numericality: { other_than: 1 , message: "can't be blank"} 
   validates :prefecture_id, numericality: { other_than: 1 , message: "can't be blank"} 
   validates :until_shipping_id, numericality: { other_than: 1 , message: "can't be blank"} 
-  validates :price, presence: true, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999,
+  validates :price, presence: true, numericality: { only_integer:true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999,
    message: "must be in half-width numbers between 300 yen and 9,999,999 yen" 
   }
-  validates :price, format: { with: /\A[0-9]+\z/, message: "Price must be in half-width numbers between 300 yen and 9,999,999 yen" }
 end

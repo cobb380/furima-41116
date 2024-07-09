@@ -82,6 +82,12 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Price must be in half-width numbers between 300 yen and 9,999,999 yen")
       end
+
+      it 'userが紐づいていない場合出品できないこと' do
+        item = FactoryBot.build(:item, user: nil)
+        item.valid?
+        expect(item.errors[:user]).to include("must exist")
+      end
     end
   end
 end
