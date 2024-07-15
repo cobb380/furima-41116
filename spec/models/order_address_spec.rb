@@ -3,16 +3,14 @@ require 'rails_helper'
 
 RSpec.describe OrderAddress, type: :model do
   before do
-    @order_address = FactoryBot.build(:order_address)
+    @user = FactoryBot.create(:user)
+    @item = FactoryBot.create(:item)
+    @order_address = FactoryBot.build(:order_address, user_id: @user.id, item_id: @item.id)
+    sleep(1)
   end
 
   describe '注文情報の保存' do
     context '保存がうまくいくとき' do
-      before do
-        user = FactoryBot.create(:user)
-        item = FactoryBot.create(:item, user:)
-        @order_address = FactoryBot.build(:order_address, user_id: user.id, item_id: item.id)
-      end
       it '全ての項目が正しく入力されていれば保存できること' do
         expect(@order_address).to be_valid
       end
@@ -59,8 +57,20 @@ RSpec.describe OrderAddress, type: :model do
         expect(@order_address.errors.full_messages).to include("Phone number can't be blank")
       end
 
-      it '電話番号は、10桁以上11桁以内の半角数値のみ保存可能であること' do
-        @order_address.phone_number = '090-1234-5678'
+      it '電話番号は、9桁以下では保存不可であること' do
+        @order_address.phone_number = '0901234'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Phone number must be a 10 or 11 digit number')
+      end
+
+      it '電話番号は、12桁異常では保存不可であること' do
+        @order_address.phone_number = '090123456789'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Phone number must be a 10 or 11 digit number')
+      end
+
+      it '電話番号は、全角数字では保存不可であること' do
+        @order_address.phone_number = '０８０１１１１１１１１'
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include('Phone number must be a 10 or 11 digit number')
       end
