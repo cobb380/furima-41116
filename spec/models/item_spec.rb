@@ -71,22 +71,22 @@ RSpec.describe Item, type: :model do
       it '価格は半角数値のみ保存可能であること' do
         @item.price = '３０００'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be in half-width numbers between 300 yen and 9,999,999 yen")
+        expect(@item.errors.full_messages).to include('Price must be in half-width numbers between 300 yen and 9,999,999 yen')
       end
 
       it '価格が¥300~¥9,999,999の間のみ保存可能であること' do
         @item.price = 299
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be in half-width numbers between 300 yen and 9,999,999 yen")
-        @item.price = 10000000
+        expect(@item.errors.full_messages).to include('Price must be in half-width numbers between 300 yen and 9,999,999 yen')
+        @item.price = 10_000_000
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be in half-width numbers between 300 yen and 9,999,999 yen")
+        expect(@item.errors.full_messages).to include('Price must be in half-width numbers between 300 yen and 9,999,999 yen')
       end
 
       it 'userが紐づいていない場合出品できないこと' do
         item = FactoryBot.build(:item, user: nil)
         item.valid?
-        expect(item.errors[:user]).to include("must exist")
+        expect(item.errors[:user]).to include('must exist')
       end
     end
   end
