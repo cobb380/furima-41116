@@ -1,4 +1,7 @@
 # Furima-41116
+URL：https://furima-41116.onrender.com
+ID：admin
+PASS：2222
 
 ## テーブル定義
 
